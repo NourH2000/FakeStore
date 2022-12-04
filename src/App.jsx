@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 import Navbar from "./components/Navbar";
@@ -17,21 +17,23 @@ import Signup from "./components/Signup";
 function App() {
   return (
     <>
-      <Routes>
-        {/* public routes  */}
-        <Route path="" element={<Layout />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/about" element={<About />} />
-        </Route>
-        {/* private routes */}
-        <Route path="" element={<RequireAuth />}>
-          <Route path="/basket" element={<Basket />} />
-        </Route>
-      </Routes>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          {/* public routes  */}
+          <Route path="" element={<Layout />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/about" element={<About />} />
+          </Route>
+          {/* private routes */}
+          <Route path="" element={<RequireAuth />}>
+            <Route path="/basket" element={<Basket />} />
+          </Route>
+        </Routes>
+      </Suspense>
     </>
   );
 }
